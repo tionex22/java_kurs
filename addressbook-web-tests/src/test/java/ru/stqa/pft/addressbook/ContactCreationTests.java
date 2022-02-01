@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ContactCreationTests {
   private WebDriver webDriver;
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() {
     System.setProperty("webdriver.chrome.driver", "D:/chromedriver.exe");
     webDriver = new ChromeDriver();
@@ -27,7 +27,7 @@ public class ContactCreationTests {
   }
 
   @Test
-  public void testUntitledTestCase() {
+  public void testContactCreation() {
     addNewContact();
     initContactCreation(new ContactData("Dima", "Petrov", "Moscow", "+79776190404", "Dima@mail.ru"));
     submitContactCreation();
@@ -64,7 +64,7 @@ public class ContactCreationTests {
     webDriver.findElement(By.linkText("add new")).click();
   }
 
-  @AfterClass(alwaysRun = true)
+  @AfterMethod(alwaysRun = true)
   public void tearDown() {
     webDriver.quit();
   }
