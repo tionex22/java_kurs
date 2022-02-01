@@ -7,7 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-public class ContactCreationTests {
+public class ContactCreationTests extends TestBase {
   private WebDriver wd;
 
   @BeforeMethod(alwaysRun = true)
