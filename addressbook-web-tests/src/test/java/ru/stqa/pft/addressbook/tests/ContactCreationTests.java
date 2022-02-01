@@ -7,23 +7,23 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ContactCreationTests {
-  private WebDriver webDriver;
+  private WebDriver wd;
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() {
     System.setProperty("webdriver.chrome.driver", "D:/chromedriver.exe");
-    webDriver = new ChromeDriver();
-    webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    webDriver.get("http://localhost/addressbook/");
+    wd = new ChromeDriver();
+    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd.get("http://localhost/addressbook/");
     login("admin", "secret");
   }
 
   private void login(String username, String password) {
-    webDriver.findElement(By.name("user")).clear();
-    webDriver.findElement(By.name("user")).sendKeys(username);
-    webDriver.findElement(By.name("pass")).clear();
-    webDriver.findElement(By.name("pass")).sendKeys(password);
-    webDriver.findElement(By.xpath("//input[@value='Login']")).click();
+    wd.findElement(By.name("user")).clear();
+    wd.findElement(By.name("user")).sendKeys(username);
+    wd.findElement(By.name("pass")).clear();
+    wd.findElement(By.name("pass")).sendKeys(password);
+    wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
 
   @Test
@@ -36,42 +36,42 @@ public class ContactCreationTests {
   }
 
   private void logOut() {
-    webDriver.findElement(By.linkText("Logout")).click();
+    wd.findElement(By.linkText("Logout")).click();
   }
 
   private void returnHomePage() {
-    webDriver.findElement(By.linkText("home page")).click();
+    wd.findElement(By.linkText("home page")).click();
   }
 
   private void submitContactCreation() {
-    webDriver.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+    wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
   }
 
   private void initContactCreation(ContactData contactData) {
-    webDriver.findElement(By.name("firstname")).clear();
-    webDriver.findElement(By.name("firstname")).sendKeys(contactData.getName());
-    webDriver.findElement(By.name("lastname")).clear();
-    webDriver.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
-    webDriver.findElement(By.name("address")).clear();
-    webDriver.findElement(By.name("address")).sendKeys(contactData.getAddress());
-    webDriver.findElement(By.name("mobile")).clear();
-    webDriver.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
-    webDriver.findElement(By.name("email")).clear();
-    webDriver.findElement(By.name("email")).sendKeys(contactData.getEmail());
+    wd.findElement(By.name("firstname")).clear();
+    wd.findElement(By.name("firstname")).sendKeys(contactData.getName());
+    wd.findElement(By.name("lastname")).clear();
+    wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
+    wd.findElement(By.name("address")).clear();
+    wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
+    wd.findElement(By.name("mobile")).clear();
+    wd.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
+    wd.findElement(By.name("email")).clear();
+    wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
   }
 
   private void addNewContact() {
-    webDriver.findElement(By.linkText("add new")).click();
+    wd.findElement(By.linkText("add new")).click();
   }
 
   @AfterMethod(alwaysRun = true)
   public void tearDown() {
-    webDriver.quit();
+    wd.quit();
   }
 
   private boolean isElementPresent(By by) {
     try {
-      webDriver.findElement(by);
+      wd.findElement(by);
       return true;
     } catch (NoSuchElementException e) {
       return false;
@@ -80,7 +80,7 @@ public class ContactCreationTests {
 
   private boolean isAlertPresent() {
     try {
-      webDriver.switchTo().alert();
+      wd.switchTo().alert();
       return true;
     } catch (NoAlertPresentException e) {
       return false;
