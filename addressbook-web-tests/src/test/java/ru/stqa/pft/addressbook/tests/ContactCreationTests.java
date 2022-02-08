@@ -9,7 +9,6 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation() {
     app.getContactHelper().createContact(new ContactData("Dima", null, null, "+79776190404", "Dima@mail.ru", "test1"), true);
     app.getNavigationHelper().returnHomePage();
-    app.getNavigationHelper().returnHomePage();
     app.logOut();
   }
 
