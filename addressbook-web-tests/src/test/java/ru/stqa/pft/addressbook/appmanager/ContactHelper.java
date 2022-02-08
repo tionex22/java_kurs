@@ -39,7 +39,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void selectContact() {
-    click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[1]"));
+    click(By.name("selected[]"));
   }
 
   public void editContact() {
@@ -48,5 +48,15 @@ public class ContactHelper extends HelperBase {
 
   public void submitContactModification() {
     click(By.name("update"));
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent (By.name("selected[]"));
+  }
+
+  public void createContact(ContactData contact, boolean b) {
+    addNewContact();
+    fillContactForm(contact, true);
+    submitContactCreation();
   }
 }
