@@ -51,12 +51,12 @@ public class ContactHelper extends HelperBase {
   }
 
   public boolean isThereAContact() {
-    return isElementPresent (By.name("selected[]"));
+    return isElementPresent(By.name("selected[]"));
   }
 
-  public void createContact(ContactData contact, boolean b) {
+  public void createContact(ContactData contact, boolean creation) {
     addNewContact();
-    fillContactForm(contact, true);
+    fillContactForm(contact, creation);
     submitContactCreation();
   }
 }

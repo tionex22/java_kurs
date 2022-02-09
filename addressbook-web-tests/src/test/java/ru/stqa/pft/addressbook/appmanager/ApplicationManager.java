@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
+import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.concurrent.TimeUnit;
 
@@ -68,5 +70,10 @@ public class ApplicationManager {
 
   public NavigationHelper getNavigationHelper() {
     return navigationHelper;
+  }
+
+  public void createGroupTest1() {
+    getNavigationHelper().gotoGroupPage();
+    getGroupHelper().createGroup(new GroupData("test1", null, null));
   }
 }
