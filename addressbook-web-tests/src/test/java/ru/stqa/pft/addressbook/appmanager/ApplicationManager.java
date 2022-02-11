@@ -74,6 +74,8 @@ public class ApplicationManager {
 
   public void createGroupTest1() {
     getNavigationHelper().gotoGroupPage();
-    getGroupHelper().createGroup(new GroupData("test1", null, null));
+    if (!getGroupHelper().isThereAGroup()) {
+      getGroupHelper().createGroup(new GroupData("test1", null, null));
+    }
   }
 }
