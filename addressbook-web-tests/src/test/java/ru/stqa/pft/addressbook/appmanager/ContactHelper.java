@@ -45,12 +45,10 @@ public class ContactHelper extends HelperBase {
 
   public void selectContact(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
-    //wd.findElements(By.cssSelector("td > input")).get(index).click();
   }
 
   public void initContact(int index) {
     wd.findElements(By.xpath("//*[@title=\"Edit\"]")).get(index).click();
-    //click(By.xpath("//*[@title=\"Edit\"]"));
   }
 
   public void submitContactModification() {
@@ -69,16 +67,10 @@ public class ContactHelper extends HelperBase {
 
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath("//*[@name=\"entry\"]")); // 1
-    //List<WebElement> elements = wd.findElements(By.cssSelector("tr > td"));
+    List<WebElement> elements = wd.findElements(By.xpath("//*[@name=\"entry\"]"));
     for (WebElement element : elements) {
-      String name = element.findElement(By.cssSelector("tbody > tr > td + td + td")).getText(); // 1
-      //String name = element.getText();
-      System.out.println("firstname" + name);
-      String lastname = element.findElement(By.cssSelector("tbody > tr > td + td")).getText(); // 1
-      //String lastname = element.getText();
-      System.out.println("lastname" + lastname);
-      //int id = Integer.parseInt(element.findElement(By.cssSelector("tbody > tr > td > input")).getAttribute("value"));
+      String name = element.findElement(By.cssSelector("tbody > tr > td + td + td")).getText();
+      String lastname = element.findElement(By.cssSelector("tbody > tr > td + td")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       ContactData contact = new ContactData(id, name, lastname, null, null, null);
       contacts.add(contact);
