@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-  @Test
+  @Test (enabled = false)
   public void testContactCreation() {
     app.createGroupTest1();
     app.getNavigationHelper().returnHomePage();
