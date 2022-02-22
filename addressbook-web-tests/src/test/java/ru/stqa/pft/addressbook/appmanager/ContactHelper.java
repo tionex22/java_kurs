@@ -35,6 +35,14 @@ public class ContactHelper extends HelperBase {
     }
   }
 
+  public void modifyContact(int index, ContactData contact) {
+    selectContact(index);
+    initContact(index);
+    fillContactForm(contact, false);
+    submitContactModification();
+    returnHomePage();
+  }
+
   public void addNewContact() {
     click(By.linkText("add new"));
   }
@@ -76,6 +84,13 @@ public class ContactHelper extends HelperBase {
       contacts.add(contact);
     }
     return contacts;
+  }
+
+  public void returnHomePage() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
+    click(By.linkText("home"));
   }
 
   public int getContactCount() {

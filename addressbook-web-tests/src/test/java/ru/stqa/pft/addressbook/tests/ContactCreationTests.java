@@ -13,14 +13,14 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-  @Test (enabled = false)
+  @Test //(enabled = false)
   public void testContactCreation() {
     app.createGroupTest1();
-    app.getNavigationHelper().returnHomePage();
+    app.getContactHelper().returnHomePage();
     List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData("222", "222", null, null, null);
+    ContactData contact = new ContactData("111", "111", null, null, null);
     app.getContactHelper().createContact(contact);
-    app.getNavigationHelper().returnHomePage();
+    app.getContactHelper().returnHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() + 1);
 
@@ -29,8 +29,6 @@ public class ContactCreationTests extends TestBase {
     before.sort(byId);
     after.sort(byId);
     Assert.assertEquals(before, after);
-    System.out.println("before" + before);
-    System.out.println("after" + after);
-    app.logOut();
+    //app.logOut();
   }
 }
