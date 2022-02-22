@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
-import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.concurrent.TimeUnit;
@@ -56,26 +55,22 @@ public class ApplicationManager {
     wd.quit();
   }
 
-  public void acceptAlert() {
-    wd.switchTo().alert().accept();
-  }
-
-  public GroupHelper getGroupHelper() {
+  public GroupHelper group() {
     return groupHelper;
   }
 
-  public ContactHelper getContactHelper() {
+  public ContactHelper contact() {
     return contactHelper;
   }
 
-  public NavigationHelper getNavigationHelper() {
+  public NavigationHelper goTo() {
     return navigationHelper;
   }
 
   public void createGroupTest1() {
-    getNavigationHelper().gotoGroupPage();
-    if (!getGroupHelper().isThereAGroup()) {
-      getGroupHelper().createGroup(new GroupData("test1", null, null));
+    goTo().groupPage();
+    if (!group().isThereAGroup()) {
+      group().create(new GroupData("test1", null, null));
     }
   }
 }

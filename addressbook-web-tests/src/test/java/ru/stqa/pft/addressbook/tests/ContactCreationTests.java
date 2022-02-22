@@ -1,13 +1,9 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.devtools.v85.domsnapshot.model.StringIndex;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,12 +12,12 @@ public class ContactCreationTests extends TestBase {
   @Test //(enabled = false)
   public void testContactCreation() {
     app.createGroupTest1();
-    app.getContactHelper().returnHomePage();
-    List<ContactData> before = app.getContactHelper().getContactList();
+    app.contact().goHomePage();
+    List<ContactData> before = app.contact().list();
     ContactData contact = new ContactData("111", "111", null, null, null);
-    app.getContactHelper().createContact(contact);
-    app.getContactHelper().returnHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().create(contact);
+    app.contact().goHomePage();
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     before.add(contact);
