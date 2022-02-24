@@ -69,7 +69,7 @@ public class ApplicationManager {
 
   public void createGroupTest1() {
     goTo().groupPage();
-    if (!group().isThereAGroup()) {
+    if (group().all().size() == 0) {
       group().create(new GroupData().withName("test1"));
     }
   }
