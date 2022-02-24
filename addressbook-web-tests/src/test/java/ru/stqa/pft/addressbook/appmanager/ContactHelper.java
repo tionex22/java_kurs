@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.HashSet;
 import java.util.List;
@@ -37,7 +38,8 @@ public class ContactHelper extends HelperBase {
   }
 
   public void modify(ContactData contact) {
-    selectContactById(contact.getId());
+    //selectContactById(contact.getId()); //Селект служит только для удаления записи, редактирование идет по "initContactById"
+    selectContact(0);
     initContactById(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
@@ -64,7 +66,7 @@ public class ContactHelper extends HelperBase {
     wd.findElements(By.xpath("//*[@title=\"Edit\"]")).get(index).click();
   }
 
-  public void initContactById(int id) { //ВЫБИРАЕТ Edit, но ID нет
+  public void initContactById(int id) {
     wd.findElement(By.cssSelector("img[title=\"Edit\"]")).click();
   }
 
@@ -104,8 +106,8 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name=\"entry\"]"));
     for (WebElement element : elements) {
       String name = element.findElement(By.cssSelector("tbody > tr > td + td + td")).getText();
