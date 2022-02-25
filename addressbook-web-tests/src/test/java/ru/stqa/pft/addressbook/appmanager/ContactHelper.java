@@ -125,17 +125,17 @@ public class ContactHelper extends HelperBase {
       String name = element.findElement(By.cssSelector("tbody > tr > td + td + td")).getText();
       String lastname = element.findElement(By.cssSelector("tbody > tr > td + td")).getText();
       String address = element.findElement(By.cssSelector("tbody > tr > td + td + td +td")).getText();
-      String[] emails = element.findElement(By.cssSelector("tbody > tr > td + td + td +td + td")).getText().split("\n");
-      String[] phones = element.findElement(By.cssSelector("tbody > tr > td + td + td + td + td + td")).getText().split("\n");
+      String allEmails = element.findElement(By.cssSelector("tbody > tr > td + td + td +td + td")).getText();
+      String allPhones = element.findElement(By.cssSelector("tbody > tr > td + td + td + td + td + td")).getText();
       contactCache.add(new ContactData().withId(id).withName(name).withLastName(lastname).withAddress(address)
-              .withEmail(emails[0]).withEmail2(emails[1]).withEmail3(emails[2])
-              .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
+              .withAllEmails(allEmails)
+              .withAllPhones(allPhones));
       //contacts.add(new GroupData().withId(id).withName("name").withLastName("lastname").withAddress(null).withMobile(null).withEmail(null);
     }
     return new Contacts(contactCache);
   }
 
-  public ContactData infoFromEditForm(ContactData contact) { //5.9
+  public ContactData infoFromEditForm(ContactData contact) { //5.9 Получает данные из формы редактирования
     initContactModificationById(contact.getId());
     String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
     String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
