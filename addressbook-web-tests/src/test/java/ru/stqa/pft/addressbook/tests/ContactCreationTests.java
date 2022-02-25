@@ -12,12 +12,12 @@ public class ContactCreationTests extends TestBase {
   @Test //(enabled = false)
   public void testContactCreation() {
     app.createGroupTest1();
-    app.contact().goHomePage();
+    app.contact().gotoHomePage();
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withName("111").withLastName("111");
     //ContactData contact = new ContactData().withName("111").withLastName("111").withAddress(null).withMobile(null).withEmail(null);
     app.contact().create(contact);
-    app.contact().goHomePage();
+    app.contact().gotoHomePage();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
@@ -27,12 +27,12 @@ public class ContactCreationTests extends TestBase {
   @Test //(enabled = false)
   public void testBadContactCreation() {
     app.createGroupTest1();
-    app.contact().goHomePage();
+    app.contact().gotoHomePage();
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withName("111'").withLastName("111'");
     //ContactData contact = new ContactData().withName("111").withLastName("111").withAddress(null).withMobile(null).withEmail(null);
     app.contact().create(contact);
-    app.contact().goHomePage();
+    app.contact().gotoHomePage();
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before));

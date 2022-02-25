@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -16,7 +15,7 @@ public class ContactModificationTests extends TestBase {
     if (app.contact().all().size() == 0) {
       app.createGroupTest1();
       app.contact().create(new ContactData().withName("111").withLastName("111"));
-      app.contact().goHomePage();
+      app.contact().gotoHomePage();
     }
   }
 
