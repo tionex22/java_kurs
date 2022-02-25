@@ -8,9 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -35,15 +33,6 @@ public class ContactHelper extends HelperBase {
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
-  }
-
-  public void modify(ContactData contact) {
-    //selectContactById(contact.getId()); //Селект служит только для удаления записи, редактирование идет по "initContactById"
-    selectContact(0);
-    initContactById(contact.getId());
-    fillContactForm(contact, false);
-    submitContactModification();
-    goHomePage();
   }
 
   public void addNewContact() {
@@ -82,12 +71,24 @@ public class ContactHelper extends HelperBase {
     addNewContact();
     fillContactForm(contact, true);
     submitContactCreation();
+    contactCache = null;
+  }
+
+  public void modify(ContactData contact) {
+    //selectContactById(contact.getId()); //Селект служит только для удаления записи, редактирование идет по "initContactById"
+    selectContact(0);
+    initContactById(contact.getId());
+    fillContactForm(contact, false);
+    submitContactModification();
+    contactCache = null;
+    goHomePage();
   }
 
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectContact();
     acceptAlert();
+    contactCache = null;
     goHomePage();
   }
 
@@ -102,20 +103,25 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public int getContactCount() {
+  public int count() { /*Метод показывает кол-во selected[] в списке*/
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  private Contacts contactCache = null;
+
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (contactCache != null) {
+      return new Contacts(contactCache);
+    }
+    contactCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name=\"entry\"]"));
     for (WebElement element : elements) {
       String name = element.findElement(By.cssSelector("tbody > tr > td + td + td")).getText();
       String lastname = element.findElement(By.cssSelector("tbody > tr > td + td")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      contacts.add(new ContactData().withId(id).withName(name).withLastName(lastname));
+      contactCache.add(new ContactData().withId(id).withName(name).withLastName(lastname));
       //contacts.add(new GroupData().withId(id).withName("name").withLastName("lastname").withAddress(null).withMobile(null).withEmail(null);
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 }
