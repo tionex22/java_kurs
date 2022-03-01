@@ -27,7 +27,7 @@ public class ContactCreationTests extends TestBase {
     //app.logOut();
   }
 
-  @Test (enabled = false)
+  @Test //(enabled = false)
   public void testBadContactCreation() {
     app.createGroupTest1();
     app.contact().gotoHomePage();
