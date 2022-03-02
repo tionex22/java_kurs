@@ -41,10 +41,10 @@ public class ContactDataGenerator {
     System.out.println(new File(".").getAbsoluteFile());
     Writer writer = new FileWriter(file);
     for (ContactData contact : contacts) {
-      writer.write(String.format("%s;%s,%s;%s;%s,%s;%s;%s,%s;%s\n", contact.getName(), contact.getLastname(), contact.getAddress()
+      writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getName(), contact.getLastname(), contact.getAddress()
               , contact.getEmail(), contact.getEmail2(), contact.getEmail3()
-              , contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()
-              , contact.getPhoto()));
+              , contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(), contact.getHomePhone2()));
+              /*, contact.getPhoto())));*/
     }
     writer.close();
   }
@@ -55,8 +55,8 @@ public class ContactDataGenerator {
       contacts.add(new ContactData().withName(String.format("name %s", i))
               .withLastName(String.format("lastname %s", i)).withAddress(String.format("address %s", i))
               .withEmail(String.format("email %s", i)).withEmail2(String.format("email2 %s", i)).withEmail3(String.format("email3 %s", i))
-              .withHomePhone(String.format("homephone %s", i)).withMobilePhone(String.format("mobilephone %s", i)).withWorkPhone(String.format("workphone %s", i))
-              .withPhoto(new File(String.format("photo %s", i))));
+              .withHomePhone(String.format("111 %s", "")).withMobilePhone(String.format("+7 (222) %s", "")).withWorkPhone(String.format("+7 (333) %s", "")).withHomePhone2(String.format("+7 (444) %s", "")));
+              /*.withPhoto(new File(String.format("photo %s", i))));*/
     }
     return contacts;
   }
