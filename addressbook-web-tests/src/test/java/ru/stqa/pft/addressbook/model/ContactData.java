@@ -14,6 +14,7 @@ public class ContactData {
   private String home;
   private String mobile;
   private String work;
+  private String home2;
   private String allPhones;
   private String allEmails;
   private File photo; //Картинка
@@ -68,6 +69,10 @@ public class ContactData {
     return home;
   }
 
+  public String getHomePhone2() {
+    return home2;
+  }
+
   public String getWorkPhone() {
     return work;
   }
@@ -111,6 +116,11 @@ public class ContactData {
 
   public ContactData withHomePhone(String home) {
     this.home = home;
+    return this;
+  }
+
+  public ContactData withHomePhone2(String home2) {
+    this.home2 = home2;
     return this;
   }
 

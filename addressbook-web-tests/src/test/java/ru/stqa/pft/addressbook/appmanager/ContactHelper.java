@@ -29,6 +29,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
     type(By.name("home"), contactData.getHomePhone());
+    type(By.name("phone2"), contactData.getHomePhone2());
     type(By.name("work"), contactData.getWorkPhone());
     attach(By.name("photo"), contactData.getPhoto()); //Отдельный метод для аттача
 
@@ -141,6 +142,7 @@ public class ContactHelper extends HelperBase {
     String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
     String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
     String home = wd.findElement(By.name("home")).getAttribute("value");
+    String home2 = wd.findElement(By.name("phone2")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
     String address = wd.findElement(By.name("address")).getAttribute("value");
@@ -151,7 +153,7 @@ public class ContactHelper extends HelperBase {
     return new ContactData().withId(contact.getId()).withName(firstname).withLastName(lastname)
             .withAddress(address)
             .withEmail(email).withEmail2(email2).withEmail3(email3)
-            .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+            .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withHomePhone2(home2);
   }
 
   private void initContactModificationById(int id) { //5.9
