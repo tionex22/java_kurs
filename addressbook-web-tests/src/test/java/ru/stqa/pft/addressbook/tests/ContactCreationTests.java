@@ -23,17 +23,12 @@ public class ContactCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validContactsFromXml() throws IOException {
-    File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
+    //File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
       String xml = "";
       String line = reader.readLine();
       while (line != null) {
         xml += line;
-      /*String[] split = line.split(";");
-      list.add(new Object[] {new ContactData().withName(split[0]).withLastName(split[1]).withAddress(split[2])
-              .withEmail(split[3]).withEmail2(split[4]).withEmail3(split[5])
-              .withHomePhone(split[6]).withMobilePhone(split[7]).withWorkPhone(split[8]).withHomePhone2(split[9])
-              .withPhoto(photo)});*/
         line = reader.readLine();
       }
       XStream xstream = new XStream();
@@ -45,17 +40,12 @@ public class ContactCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validContactsFromJson() throws IOException {
-    File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
+    //File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
       String json = "";
       String line = reader.readLine();
       while (line != null) {
         json += line;
-      /*String[] split = line.split(";");
-      list.add(new Object[] {new ContactData().withName(split[0]).withLastName(split[1]).withAddress(split[2])
-              .withEmail(split[3]).withEmail2(split[4]).withEmail3(split[5])
-              .withHomePhone(split[6]).withMobilePhone(split[7]).withWorkPhone(split[8]).withHomePhone2(split[9])
-              .withPhoto(photo)});*/
         line = reader.readLine();
       }
       Gson gson = new Gson();
@@ -83,7 +73,6 @@ public class ContactCreationTests extends TestBase {
     app.contact().gotoHomePage();
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withName("111'").withLastName("111'");
-    //ContactData contact = new ContactData().withName("111").withLastName("111").withAddress(null).withMobile(null).withEmail(null);
     app.contact().create(contact);
     app.contact().gotoHomePage();
     assertThat(app.contact().count(), equalTo(before.size()));

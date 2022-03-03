@@ -29,6 +29,10 @@ public class ContactModificationTests extends TestBase {
     app.contact().modify(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
+    System.out.println("AFTER " + after);
+    System.out.println("BEFORE " + before.withOut(modifiedContact).withAdded(contact));
+    System.out.println("modifiedContact " + modifiedContact);
+    System.out.println("contact " + contact);
     assertThat(after, equalTo(before.withOut(modifiedContact).withAdded(contact)));
     //app.logOut();
   }

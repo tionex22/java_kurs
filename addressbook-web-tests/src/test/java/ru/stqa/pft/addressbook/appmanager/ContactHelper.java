@@ -84,7 +84,8 @@ public class ContactHelper extends HelperBase {
   public void modify(ContactData contact) {
     //selectContactById(contact.getId()); //Селект служит только для удаления записи, редактирование идет по "initContactById"
     selectContact(0);
-    initContactById(contact.getId());
+    //initContactById(contact.getId());
+    initContactModificationById(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
     contactCache = null;

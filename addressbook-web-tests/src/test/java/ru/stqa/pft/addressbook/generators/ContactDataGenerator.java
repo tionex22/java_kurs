@@ -82,7 +82,7 @@ public class ContactDataGenerator {
 
   private List<ContactData> generateContacts(int count) { //Генерируем данные (в настройках "Edit Configuration" их кол-во)
     List<ContactData> contacts = new ArrayList<ContactData>();
-    //File photo = new File("src/test/resources/stru.jpg");
+    File photo = new File("src/test/resources/stru.jpg");
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactData().withName(String.format("name %s", i))
               .withLastName(String.format("lastname %s", i)).withAddress(String.format("address %s", i))
@@ -90,7 +90,7 @@ public class ContactDataGenerator {
               .withHomePhone(String.format("111%s", "")).withMobilePhone(String.format("+7 (222)%s", ""))
               .withWorkPhone(String.format("+7 (333)%s", "")).withHomePhone2(String.format("+7 (444)%s", "")));
               //.withPhoto(new File(String.format("asdas%s", ""))));
-              //.withPhoto(new File(String.format("photo %s", i))));
+              //.withPhoto(File.listRoots()));
     }
     return contacts;
   }
