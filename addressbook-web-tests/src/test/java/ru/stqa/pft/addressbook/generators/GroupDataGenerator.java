@@ -41,7 +41,7 @@ public class GroupDataGenerator {
   private void run() throws IOException {
     List<GroupData> groups = generateGroups(count);
     if (format.equals("csv")) {
-      saveAsScv(groups, new File(file)); //Сохраняем в CSV формат
+      saveAsCsv(groups, new File(file)); //Сохраняем в CSV формат
     } else if (format.equals("xml")) {
       saveAsXml(groups, new File(file)); //Сохраняем в XML формат
     }  else if (format.equals("json")) {
@@ -54,27 +54,27 @@ public class GroupDataGenerator {
   private void saveAsJson(List<GroupData> groups, File file) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     String json = gson.toJson(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<GroupData> groups, File file) throws IOException {
     XStream xstream = new XStream();
     xstream.processAnnotations(GroupData.class); //Наименование XML в GroupData
     String xml = xstream.toXML(groups);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
-  private void saveAsScv(List<GroupData> groups, File file) throws IOException { //Записываем данные
+  private void saveAsCsv(List<GroupData> groups, File file) throws IOException { //Записываем данные
     System.out.println(new File(".").getAbsoluteFile());
-    Writer writer = new FileWriter(file);
-    for (GroupData group : groups) {
-      writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
+    try (Writer writer = new FileWriter(file)) {
+         for (GroupData group : groups) {
+        writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
+      }
     }
-    writer.close();
   }
 
   private List<GroupData> generateGroups(int count) { //Генерируем данные (в настройках "Edit Configuration" их кол-во)
