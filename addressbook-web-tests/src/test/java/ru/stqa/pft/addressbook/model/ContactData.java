@@ -76,8 +76,9 @@ public class ContactData {
   private String allEmails;
 
   @Expose
-  @Transient //Для SQL аннотация исключает колонку
-  private File photo; //Картинка
+  @Column(name="photo") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
+  private String photo; //Картинка
 
 
 
@@ -86,7 +87,7 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return photo;
+    return new File(photo);
   }
 
   public String getAllEmails() {
@@ -205,7 +206,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
