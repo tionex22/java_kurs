@@ -3,18 +3,36 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @XStreamAlias("group") //Наименование XML
+@Entity //Для SQL
+@Table(name="group_list") //Для SQL
 
 public class GroupData {
 
   @XStreamOmitField
+  @Id //Привязка по ID
+  @Column(name="group_id") //Для SQL
   private int id = Integer.MAX_VALUE;
+
   @Expose
+  @Column(name="group_name") //Для SQL
   private String name;
+
   @Expose
+  @Column(name="group_header") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String header;
+
   @Expose
+  @Column(name="group_footer") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля
   private String footer;
 
   public int getId() {

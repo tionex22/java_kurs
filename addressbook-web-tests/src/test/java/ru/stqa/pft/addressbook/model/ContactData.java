@@ -3,40 +3,80 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
 @XStreamAlias("contact") //Наименование XML
+@Entity //Для SQL определяет класс ContactData привязанным к базе
+@Table(name="addressbook") //Для SQL привязка к таблице
 
 public class ContactData {
 
   @XStreamOmitField
+  @Id
+  @Column(name="id") //Для SQL
   private int id = Integer.MAX_VALUE;
+
   @Expose
+  @Column(name="firstname") //Для SQL
   private String name;
+
   @Expose
+  @Column(name="lastname") //Для SQL
   private String lastname;
+
   @Expose
+  @Column(name="address") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String address;
+
   @Expose
+  @Column(name="email") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String email;
+
   @Expose
+  @Column(name="email2") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String email2;
+
   @Expose
+  @Column(name="email3") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String email3;
+
   @Expose
+  @Column(name="home") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String home;
+
   @Expose
+  @Column(name="mobile") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String mobile;
+
   @Expose
+  @Column(name="work") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String work;
+
   @Expose
+  @Column(name="phone2") //Для SQL
+  @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String home2;
+
   @Expose
+  @Transient //Для SQL аннотация исключает колонку
   private String allPhones;
+
   @Expose
+  @Transient //Для SQL аннотация исключает колонку
   private String allEmails;
+
   @Expose
+  @Transient //Для SQL аннотация исключает колонку
   private File photo; //Картинка
 
 
