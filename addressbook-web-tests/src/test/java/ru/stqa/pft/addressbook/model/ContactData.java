@@ -87,7 +87,7 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return new File(photo);
+    return new File(this.photo);
   }
 
   public String getAllEmails() {
@@ -185,6 +185,60 @@ public class ContactData {
     return this;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactData that = (ContactData) o;
+
+    if (id != that.id) return false;
+    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+    if (address != null ? !address.equals(that.address) : that.address != null) return false;
+    if (email != null ? !email.equals(that.email) : that.email != null) return false;
+    if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+    if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
+    if (home != null ? !home.equals(that.home) : that.home != null) return false;
+    if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
+    if (work != null ? !work.equals(that.work) : that.work != null) return false;
+    return home2 != null ? home2.equals(that.home2) : that.home2 == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+    result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+    result = 31 * result + (home != null ? home.hashCode() : 0);
+    result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+    result = 31 * result + (work != null ? work.hashCode() : 0);
+    result = 31 * result + (home2 != null ? home2.hashCode() : 0);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", address='" + address + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            ", home='" + home + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", work='" + work + '\'' +
+            ", home2='" + home2 + '\'' +
+            ", photo='" + photo + '\'' +
+            '}';
+  }
+
   public ContactData withMobilePhone(String mobile) {
     this.mobile = mobile;
     return this;
@@ -211,33 +265,4 @@ public class ContactData {
   }
 
 
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", lastname='" + lastname + '\'' +
-            '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactData that = (ContactData) o;
-
-    if (id != that.id) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
-    return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-    return result;
-  }
 }

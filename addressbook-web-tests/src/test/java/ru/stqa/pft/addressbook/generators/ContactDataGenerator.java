@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,9 +89,8 @@ public class ContactDataGenerator {
               .withLastName(String.format("lastname %s", i)).withAddress(String.format("address %s", i))
               .withEmail(String.format("email %s", i)).withEmail2(String.format("email2 %s", i)).withEmail3(String.format("email3 %s", i))
               .withHomePhone(String.format("111%s", "")).withMobilePhone(String.format("+7 (222)%s", ""))
-              .withWorkPhone(String.format("+7 (333)%s", "")).withHomePhone2(String.format("+7 (444)%s", "")));
-              //.withPhoto(new File(String.format("asdas%s", ""))));
-              //.withPhoto(File.listRoots()));
+              .withWorkPhone(String.format("+7 (333)%s", "")).withHomePhone2(String.format("+7 (444)%s", ""))
+              .withPhoto(new File(String.format("src/test/resources/stru.jpg%s", "")))); //Передаю путь к файлу stru.jpg в json
     }
     return contacts;
   }

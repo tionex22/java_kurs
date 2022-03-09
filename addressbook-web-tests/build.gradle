@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-/*task testGroups(type: Test) {
+task testGroups(type: Test) {
     useTestNG {
         suites 'src/test/resources/testng-groups.xml'
     }
@@ -10,9 +10,9 @@ apply plugin: 'java'
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
-}*/
+}
 
-/*task testContacts(type: Test) {
+task testContacts(type: Test) {
     useTestNG {
         suites 'src/test/resources/testng-contacts.xml'
     }
@@ -22,7 +22,7 @@ apply plugin: 'java'
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
-}*/
+}
 
 test {
     useTestNG{}

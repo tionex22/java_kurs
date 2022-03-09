@@ -24,6 +24,7 @@ public class ApplicationManager {
   private ContactHelper contactHelper;
   public boolean acceptNextAlert = true;
   private String browser;
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -33,6 +34,8 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
+    dbHelper = new DbHelper();
 
     if (browser.equals(BrowserType.CHROME)) {
       System.setProperty("webdriver.chrome.driver", "D:/chromedriver.exe");
@@ -78,8 +81,12 @@ public class ApplicationManager {
 
   public void createGroupTest1() {
     goTo().groupPage();
-    if (group().all().size() == 0) {
+    if (db().groups().size() == 0) { //данные из базы (.db().)
       group().create(new GroupData().withName("test1"));
     }
+  }
+
+  public DbHelper db() {
+    return dbHelper;
   }
 }

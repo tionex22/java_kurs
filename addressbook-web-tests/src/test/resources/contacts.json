@@ -9,7 +9,8 @@
     "home": "111",
     "mobile": "+7 (222)",
     "work": "+7 (333)",
-    "home2": "+7 (444)"
+    "home2": "+7 (444)",
+    "photo": "src\\test\\resources\\stru.jpg"
   },
   {
     "name": "name 1",
@@ -21,7 +22,8 @@
     "home": "111",
     "mobile": "+7 (222)",
     "work": "+7 (333)",
-    "home2": "+7 (444)"
+    "home2": "+7 (444)",
+    "photo": "src\\test\\resources\\stru.jpg"
   },
   {
     "name": "name 2",
@@ -33,6 +35,7 @@
     "home": "111",
     "mobile": "+7 (222)",
     "work": "+7 (333)",
-    "home2": "+7 (444)"
+    "home2": "+7 (444)",
+    "photo": "src\\test\\resources\\stru.jpg"
   }
 ]
