@@ -8,11 +8,18 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
+import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestBase {
 
@@ -41,4 +48,24 @@ public class TestBase {
     logger.info("Stop test " + m.getName());
   }
 
+  public void verifyGroupListInUI() { //Проверка списков из UI (вкл/выкл)
+    if (Boolean.getBoolean("verifyUI")) { //Включение в - Edit Configurations "VM Options = -ea -DverifyUI=true"
+      Groups dbGroups = app.db().groups(); //данные из базы (.db().)
+      Groups uiGroups = app.group().all(); //Данные из UI
+      assertThat(uiGroups, equalTo(dbGroups.stream() //Сравниваем только ID и имена
+              .map((g) -> new GroupData().withId(g.getId()).withName(g.getName()))
+              .collect(Collectors.toSet())));
+    }
+  }
+
+  public void verifyContactListInUI() { //Проверка списков из UI (вкл/выкл)
+    if (Boolean.getBoolean("verifyUI")) { //Включение - в Edit Configurations "VM Options = -ea -DverifyUI=true"
+      Contacts dbContacts = app.db().contacts(); //данные из базы (.db().)
+      Contacts uiContacts = app.contact().all(); //Данные из UI
+      assertThat(uiContacts, equalTo(dbContacts.stream() //Сравниваем только ID, имена и адрес
+              .map((c) -> new ContactData().withId(c.getId()).withName(c.getName()).withLastName(c.getLastname())
+              .withAddress(c.getAddress()))
+              .collect(Collectors.toSet())));
+    }
+  }
 }
