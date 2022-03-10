@@ -68,6 +68,10 @@ public class ContactData {
   private String home2;
 
   @Expose
+  @Transient
+  private String group;
+
+  @Expose
   @Transient //Для SQL аннотация исключает колонку
   private String allPhones;
 
@@ -138,6 +142,10 @@ public class ContactData {
     return work;
   }
 
+  public String getGroup() {
+    return group;
+  }
+
 
 
   public ContactData withId(int id) {
@@ -184,6 +192,37 @@ public class ContactData {
     this.home2 = home2;
     return this;
   }
+
+  public ContactData withMobilePhone(String mobile) {
+    this.mobile = mobile;
+    return this;
+  }
+
+  public ContactData withWorkPhone(String work) {
+    this.work = work;
+    return this;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
+
+  public ContactData withPhoto(File photo) {
+    this.photo = photo.getPath();
+    return this;
+  }
+
+  public void withGroup(String group) {
+    this.group = group;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -238,31 +277,4 @@ public class ContactData {
             ", photo='" + photo + '\'' +
             '}';
   }
-
-  public ContactData withMobilePhone(String mobile) {
-    this.mobile = mobile;
-    return this;
-  }
-
-  public ContactData withWorkPhone(String work) {
-    this.work = work;
-    return this;
-  }
-
-  public ContactData withAllPhones(String allPhones) {
-    this.allPhones = allPhones;
-    return this;
-  }
-
-  public ContactData withAllEmails(String allEmails) {
-    this.allEmails = allEmails;
-    return this;
-  }
-
-  public ContactData withPhoto(File photo) {
-    this.photo = photo.getPath();
-    return this;
-  }
-
-
 }
