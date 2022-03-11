@@ -5,10 +5,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("group") //Наименование XML
 @Entity //Для SQL
@@ -35,6 +34,13 @@ public class GroupData {
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля
   private String footer;
 
+  @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER) ////Для SQL - забирает данные из ContactData из аннотации @JoinTable
+  private Set<ContactData> contacts = new HashSet<ContactData>();
+
+  public Contacts getContacts() {
+    return new Contacts(contacts);
+  }
+
   public int getId() {
     return id;
   }
@@ -49,6 +55,26 @@ public class GroupData {
 
   public String getFooter() {
     return footer;
+  }
+
+  public GroupData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public GroupData withName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public GroupData withHeader(String header) {
+    this.header = header;
+    return this;
+  }
+
+  public GroupData withFooter(String footer) {
+    this.footer = footer;
+    return this;
   }
 
   @Override
@@ -73,26 +99,6 @@ public class GroupData {
     return result;
   }
 
-  public GroupData withId(int id) {
-    this.id = id;
-    return this;
-  }
-
-  public GroupData withName(String name) {
-    this.name = name;
-    return this;
-  }
-
-  public GroupData withHeader(String header) {
-    this.header = header;
-    return this;
-  }
-
-  public GroupData withFooter(String footer) {
-    this.footer = footer;
-    return this;
-  }
-
   @Override
   public String toString() {
     return "GroupData{" +
@@ -102,5 +108,4 @@ public class GroupData {
             ", footer='" + footer + '\'' +
             '}';
   }
-
 }

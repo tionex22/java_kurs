@@ -21,6 +21,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
+  File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
+
   @DataProvider
   public Iterator<Object[]> validContactsFromXml() throws IOException {
     //File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
@@ -40,7 +42,6 @@ public class ContactCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validContactsFromJson() throws IOException {
-    //File photo = new File("src/test/resources/stru.jpg"); //Добавляем аттач (относительный путь)
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
       String json = "";
       String line = reader.readLine();
@@ -72,12 +73,12 @@ public class ContactCreationTests extends TestBase {
   public void testBadContactCreation() {
     app.createGroupTest1();
     app.contact().gotoHomePage();
-    Contacts before = app.contact().all();
-    ContactData contact = new ContactData().withName("111'").withLastName("111'");
+    Contacts before = app.db().contacts();
+    ContactData contact = new ContactData().withName("111'").withLastName("111'").withPhoto(photo);
     app.contact().create(contact);
     app.contact().gotoHomePage();
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before));
     //app.logOut();
   }

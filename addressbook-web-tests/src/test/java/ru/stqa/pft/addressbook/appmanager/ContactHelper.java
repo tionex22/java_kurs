@@ -8,7 +8,6 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.io.File;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -55,6 +54,10 @@ public class ContactHelper extends HelperBase {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
+  private void selectGroup(int index) {
+    wd.findElements(By.cssSelector("select[name='group'] > option")).get(index).click();
+  }
+
   public void selectContactById(int id) {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
@@ -80,6 +83,28 @@ public class ContactHelper extends HelperBase {
     fillContactForm(contact, true);
     submitContactCreation();
     contactCache = null;
+  }
+
+  public void addInGroup() {
+    selectContact(0);
+    clickAddTo();
+    gotoHomePage();
+    selectGroup(2);
+  }
+
+  public void deleteFromGroup() {
+    selectGroup(2);
+    selectContact(0);
+    clickRemove();
+    gotoHomePage();
+  }
+
+  private void clickRemove() {
+    click(By.name("remove"));
+  }
+
+  private void clickAddTo() {
+    click(By.cssSelector("input[name=add]"));
   }
 
   public void modify(ContactData contact) {

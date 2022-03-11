@@ -16,7 +16,7 @@ public class ContactModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    if (app.db().contacts().size() == 0) { //данные из базы (.db().)
+    if (app.db().contacts().size() == 0 | app.db().groups().size() == 0) { //данные из базы (.db().)
       app.createGroupTest1();
       app.contact().create(new ContactData().withName("000").withLastName("000").withAddress("000")
               .withEmail("000").withEmail2("000").withEmail3("000")

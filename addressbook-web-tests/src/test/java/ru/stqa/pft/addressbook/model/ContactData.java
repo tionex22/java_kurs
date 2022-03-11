@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact") //Наименование XML
 @Entity //Для SQL определяет класс ContactData привязанным к базе
@@ -16,60 +18,56 @@ public class ContactData {
 
   @XStreamOmitField
   @Id
-  @Column(name="id") //Для SQL
+  @Column(name = "id") //Для SQL
   private int id = Integer.MAX_VALUE;
 
   @Expose
-  @Column(name="firstname") //Для SQL
+  @Column(name = "firstname") //Для SQL
   private String name;
 
   @Expose
-  @Column(name="lastname") //Для SQL
+  @Column(name = "lastname") //Для SQL
   private String lastname;
 
   @Expose
-  @Column(name="address") //Для SQL
+  @Column(name = "address") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String address;
 
   @Expose
-  @Column(name="email") //Для SQL
+  @Column(name = "email") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String email;
 
   @Expose
-  @Column(name="email2") //Для SQL
+  @Column(name = "email2") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String email2;
 
   @Expose
-  @Column(name="email3") //Для SQL
+  @Column(name = "email3") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String email3;
 
   @Expose
-  @Column(name="home") //Для SQL
+  @Column(name = "home") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String home;
 
   @Expose
-  @Column(name="mobile") //Для SQL
+  @Column(name = "mobile") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String mobile;
 
   @Expose
-  @Column(name="work") //Для SQL
+  @Column(name = "work") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String work;
 
   @Expose
-  @Column(name="phone2") //Для SQL
+  @Column(name = "phone2") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String home2;
-
-  @Expose
-  @Transient
-  private String group;
 
   @Expose
   @Transient //Для SQL аннотация исключает колонку
@@ -80,11 +78,20 @@ public class ContactData {
   private String allEmails;
 
   @Expose
-  @Column(name="photo") //Для SQL
+  @Column(name = "photo") //Для SQL
   @Type(type = "text") ////Для SQL устанавливаем тип колонки/поля для (varchar(225))
   private String photo; //Картинка
 
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"),
+          inverseJoinColumns = @JoinColumn(name = "group_id")) //Для SQL джоиним таблицу
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
+
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
 
   public int getId() {
     return id;
@@ -140,10 +147,6 @@ public class ContactData {
 
   public String getWorkPhone() {
     return work;
-  }
-
-  public String getGroup() {
-    return group;
   }
 
 
@@ -216,10 +219,6 @@ public class ContactData {
   public ContactData withPhoto(File photo) {
     this.photo = photo.getPath();
     return this;
-  }
-
-  public void withGroup(String group) {
-    this.group = group;
   }
 
 
