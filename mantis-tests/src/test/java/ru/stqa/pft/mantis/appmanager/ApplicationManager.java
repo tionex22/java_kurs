@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.appmanager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -46,11 +45,15 @@ public class ApplicationManager {
     wd.get(properties.getProperty("web.baseUrl"));
   }
 
-  public void logOut() {
-    wd.findElement(By.linkText("Logout")).click();
-  }
-
   public void stop() {
     wd.quit();
+  }
+
+  public HttpSession newSession() {
+    return new HttpSession(this);
+  }
+
+  public String getProperty(String key) {
+    return properties.getProperty(key);
   }
 }
