@@ -74,4 +74,36 @@ public class DbHelper {
       System.out.println("VendorError: " + ex.getErrorCode());
     } return new Contacts();
   }
+
+  public Contacts verifyContactNotInGroup() {
+    Connection conn = null;
+    try {
+      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/addressbook?user=root&password=");
+      Statement st = conn.createStatement();
+      ResultSet rs = st.executeQuery("select addressbook.id, firstname, lastname, address, home, mobile" +
+              ", work, phone2, email, email2, email3 from addressbook " +
+              "join address_in_groups ON addressbook.id=address_in_groups.id where (select count(*) from addressbook) = (select count(*) from address_in_groups)");
+      Contacts contacts = new Contacts();
+      while (rs.next()) {
+        contacts.add(new ContactData().withId(rs.getInt("id")).withName(rs.getString("firstname")).withLastName(rs.getString("lastname"))
+                .withAddress(rs.getString("address")).withHomePhone(rs.getString("home")).withMobilePhone(rs.getString("mobile"))
+                .withWorkPhone(rs.getString("work")).withHomePhone2(rs.getString("phone2"))
+                .withEmail(rs.getString("email")).withEmail2(rs.getString("email2")).withEmail3(rs.getString("email3")));
+      }
+      rs.close();
+      st.close();
+      conn.close();
+
+      //System.out.println(contacts);
+      return new Contacts(contacts);
+
+      // Do something with the Connection
+
+    } catch (SQLException ex) {
+      // handle any errors
+      System.out.println("SQLException: " + ex.getMessage());
+      System.out.println("SQLState: " + ex.getSQLState());
+      System.out.println("VendorError: " + ex.getErrorCode());
+    } return new Contacts();
+  }
 }

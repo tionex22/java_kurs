@@ -42,6 +42,20 @@ public class ContactHelper extends HelperBase {
     }
   }
 
+  public void fillContactFormWithoutGroup(ContactData contactData) {
+    type(By.name("firstname"), contactData.getName());
+    type(By.name("lastname"), contactData.getLastname());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("email"), contactData.getEmail());
+    type(By.name("email2"), contactData.getEmail2());
+    type(By.name("email3"), contactData.getEmail3());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("phone2"), contactData.getHomePhone2());
+    type(By.name("work"), contactData.getWorkPhone());
+    attach(By.name("photo"), contactData.getPhoto()); //Отдельный метод для аттача
+  }
+
   public void addNewContact() {
     click(By.linkText("add new"));
   }
@@ -85,11 +99,25 @@ public class ContactHelper extends HelperBase {
     contactCache = null;
   }
 
+  public void createWithoutGroup(ContactData contact) {
+    addNewContact();
+    fillContactFormWithoutGroup(contact);
+    submitContactCreation();
+    contactCache = null;
+  }
+
   public void addInGroup() {
+    selectGroup(1);
     selectContact(0);
     clickAddTo();
-    gotoHomePage();
-    selectGroup(2);
+    gotoContactInGroupPage();
+  }
+
+  private void gotoContactInGroupPage() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
+    click(By.cssSelector("i > a[href]"));
   }
 
   public void deleteFromGroup() {
