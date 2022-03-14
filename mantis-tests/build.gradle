@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+test {
+    useTestNG {
+        suites 'src/test/resources/testng.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+test {
+    useTestNG{}
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.hamcrest:hamcrest:2.2'
+    implementation "org.testng:testng:7.5"
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
+}
