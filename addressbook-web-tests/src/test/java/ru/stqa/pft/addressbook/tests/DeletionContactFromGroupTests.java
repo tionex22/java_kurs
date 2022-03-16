@@ -3,13 +3,13 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.File;
-import java.util.stream.Collectors;
+import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class DeletionContactFromGroupTests extends TestBase {
 
@@ -17,7 +17,7 @@ public class DeletionContactFromGroupTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    if (app.db().verifyAddInGroup().size() == 0) { //данные из базы (.db().)
+    if (app.db().verifyContactInGroup().size() == 0) { //данные из базы (.db().)
       app.createGroupTest1();
       app.contact().create(new ContactData().withName("000").withLastName("000").withAddress("000")
               .withEmail("000").withEmail2("000").withEmail3("000")
@@ -28,17 +28,17 @@ public class DeletionContactFromGroupTests extends TestBase {
   }
 
   @Test
-  public void testDeletionContactFromGroup() {
-    app.contact().deleteFromGroup();
-    Contacts dbContacts = app.db().verifyAddInGroup();
-    System.out.println("dbContacts" + dbContacts);
-    Contacts uiContacts = app.contact().all();
-    System.out.println("uiContacts" + uiContacts);
-    assertThat(uiContacts, equalTo(dbContacts.stream() //Сравниваем только ID, имена и адрес
-            .map((c) -> new ContactData().withId(c.getId()).withName(c.getName()).withLastName(c.getLastname())
-                    .withAddress(c.getAddress()))
-            .collect(Collectors.toSet())));
+  public void testDeletionContactFromGroup() throws Exception {
+    ContactData before = app.db().contactWithGroup();
+    GroupData group = before.getGroups().iterator().next();
+    app.contact().gotoHomePage();
+    app.contact().getGroupData(group);
+    app.contact().selectContact(before);
+    app.contact().removeContactFromGroup();
+    ContactData after = app.db().contactById(before.getId());
+    System.out.println("11111 " + after);
+    System.out.println("222222 " + group);
+    assertTrue(after.getGroups().contains(group));
+    verifyContactListInUI();
   }
 }
-
-//Если контакта нет в группе - как удалять

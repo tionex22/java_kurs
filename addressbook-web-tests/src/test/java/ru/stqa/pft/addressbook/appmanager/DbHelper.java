@@ -43,7 +43,7 @@ public class DbHelper {
     return new Contacts (result);
   }
 
-  public Contacts verifyAddInGroup() {
+  public Contacts verifyContactInGroup() {
     Connection conn = null;
     try {
       conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/addressbook?user=root&password=");
@@ -105,5 +105,32 @@ public class DbHelper {
       System.out.println("SQLState: " + ex.getSQLState());
       System.out.println("VendorError: " + ex.getErrorCode());
     } return new Contacts();
+  }
+
+  public ContactData contactById(int id) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<ContactData> result = session.createQuery(String.format("from ContactData where id = %s ", id)).list();
+    session.getTransaction().commit();
+    session.close();
+    return result.iterator().next();
+  }
+
+  public ContactData contactWithoutGroup() {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<ContactData> result = session.createQuery("from ContactData where groups.size = 0 and deprecated = '0000-00-00'").list();
+    session.getTransaction().commit();
+    session.close();
+    return result.iterator().next();
+  }
+
+  public ContactData contactWithGroup() {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<ContactData> result = session.createQuery("from ContactData where groups.size > 0 and deprecated = '0000-00-00'").list();
+    session.getTransaction().commit();
+    session.close();
+    return result.iterator().next();
   }
 }

@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -106,11 +107,13 @@ public class ContactHelper extends HelperBase {
     contactCache = null;
   }
 
-  public void addInGroup() {
+  public ContactData addInGroup() {
     selectGroup(1);
     selectContact(0);
     clickAddTo();
     gotoContactInGroupPage();
+    //DbHelper.verifyAddInGroup();
+    return new ContactData();
   }
 
   private void gotoContactInGroupPage() {
@@ -216,5 +219,40 @@ public class ContactHelper extends HelperBase {
     WebElement row = checkbox.findElement(By.xpath("./../.."));
     List<WebElement> cells = row.findElements(By.tagName("td"));
     cells.get(7).findElement(By.tagName("a")).click();
+  }
+
+  public void selectGroup(Contacts contactData) {
+    if (contactData.iterator().next().getGroups().size() > 1) {
+      Assert.assertTrue(contactData.iterator().next().getGroups().size() == 1);
+      new Select(wd.findElement(By.name("group"))).selectByVisibleText(contactData.iterator().next().getGroups().iterator().next().getName());
+    }
+  }
+
+  public void selectGroup(GroupData group) {
+    wd.findElement(By.xpath(String.format("//select[@name='to_group']/option[@value='%s']", group.getId()))).click();
+  }
+  public void selectContact(ContactData contact) {
+    click(By.xpath(String.format("//input[@type='checkbox']", contact.getId())));
+  }
+
+  public void selectContactWithoutGroup(ContactData contact) {
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText("[none]");
+    click(By.xpath(String.format("//input[@type='checkbox']", contact.getId())));
+  }
+
+  public void removeContactFromGroup() {
+    click(By.name("remove"));
+    contactCache = null;
+    gotoHomePage();
+  }
+
+  public void getGroupData(GroupData groupData) {
+    click(By.xpath(String.format("//select[@name='group']/option[text() = '%s']", groupData.getName())));;
+  }
+
+  public void addContactToGroup() {
+    click(By.name("add"));
+    contactCache = null;
+    gotoHomePage();
   }
 }
